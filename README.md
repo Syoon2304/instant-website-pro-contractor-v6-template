@@ -1,4 +1,4 @@
-# MrYoons Contractor Website Publishing System V6
+# Instant Website Pro Contractor Publishing System V6
 
 This repository is a **nonvisual publishing and safety foundation** for the V6 contractor program. It protects imports, public/private boundaries, checks, deployment, monitoring, and rollback without deciding what a contractor’s website should look like.
 
