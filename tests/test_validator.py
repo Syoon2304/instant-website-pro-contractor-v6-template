@@ -306,26 +306,26 @@ class ValidatorTests(unittest.TestCase):
         manifest_path = self.root / "site-manifest.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         services_page = next(page for page in manifest["pages"] if page["file_path"] == "services.html")
-        services_page["url_path"] = "/food/"
-        services_page["canonical_url_path"] = "/food/"
+        services_page["url_path"] = "/priority-service/"
+        services_page["canonical_url_path"] = "/priority-service/"
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         for page_path in self.root.glob("*.html"):
-            text = page_path.read_text(encoding="utf-8").replace('href="/services.html"', 'href="/food/"')
+            text = page_path.read_text(encoding="utf-8").replace('href="/services.html"', 'href="/priority-service/"')
             if page_path.name == "services.html":
                 text = text.replace(
                     "https://contractor-v6-test.pages.dev/services.html",
-                    "https://contractor-v6-test.pages.dev/food/",
+                    "https://contractor-v6-test.pages.dev/priority-service/",
                 )
             page_path.write_text(text, encoding="utf-8")
         sitemap = self.root / "sitemap.xml"
         sitemap.write_text(
             sitemap.read_text(encoding="utf-8").replace(
                 "https://contractor-v6-test.pages.dev/services.html",
-                "https://contractor-v6-test.pages.dev/food/",
+                "https://contractor-v6-test.pages.dev/priority-service/",
             ),
             encoding="utf-8",
         )
-        (self.root / "_redirects").write_text("/food/ /services.html 200\n", encoding="utf-8")
+        (self.root / "_redirects").write_text("/priority-service/ /services.html 200\n", encoding="utf-8")
         report = self.validate()
         self.assertTrue(report.passed, report.to_markdown())
 
@@ -333,8 +333,8 @@ class ValidatorTests(unittest.TestCase):
         manifest_path = self.root / "site-manifest.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         services_page = next(page for page in manifest["pages"] if page["file_path"] == "services.html")
-        services_page["url_path"] = "/food/"
-        services_page["canonical_url_path"] = "/food/"
+        services_page["url_path"] = "/priority-service/"
+        services_page["canonical_url_path"] = "/priority-service/"
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         report = self.validate()
         self.assertIn("manifest.page_route", {finding.code for finding in report.errors})
